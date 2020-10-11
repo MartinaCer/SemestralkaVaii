@@ -1,0 +1,66 @@
+* {
+    font-family: Bahnschrift;
+    color: black;
+}
+body {
+    background-color: aquamarine;
+}
+.titlediv {
+    border: 3px outset blue;
+    background-color: dodgerblue;
+    text-align: center;
+}
+.nav {
+    padding: 0;
+}
+.navfont {
+    font-size: large;
+}
+.navli {
+    display: inline-block;
+    background: dodgerblue;
+    border: 1px solid;
+    padding: 5px;
+    margin: 0 auto;
+}
+.navli:hover {
+    background: blue;
+}
+.produktysec {
+    display: flex;
+    flex-wrap: wrap;
+}
+.produktkarta {
+    padding: 0.5%;
+    flex-grow: 1;
+    flex-basis: 16%;
+}
+.produktobrazok img {
+    max-width: 100%;
+}
+.produktinfo {
+    margin-top: auto;
+}
+@media (max-width: 920px) {
+    .produktkarta {
+        flex: 1 25%;
+    }
+}
+@media (max-width: 600px) {
+    .produktkarta {
+        flex: 1 46%;
+    }
+}
+h2,h3 {
+    text-align: center;
+}
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 3px;
+    display: inline-block;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
