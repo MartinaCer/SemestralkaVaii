@@ -7,7 +7,6 @@ require_once "pripojenie.php";
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Produkty</title>
         <link href="styly.css" rel="stylesheet">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     </head>
     <body>
     <div class="divHlavicka">
@@ -45,57 +44,3 @@ require_once "pripojenie.php";
     </section>
     </body>
     </html>
-
-    <script>
-        $(document).ready(function () {
-            $('form').submit(function (event) {
-                var data = {
-                    'id': $('input[name=id]').val(),
-                    'mnozstvo': $('input[name=mnozstvo]').val(),
-                    'pridaj': "pridaj"
-                };
-                $.ajax({
-                    type: 'POST',
-                    url: 'produkty.php',
-                    data: data,
-                    dataType: 'json',
-                    encode: true
-                }).done(function (data) {
-                    console.log(data);
-                });
-                event.preventDefault();
-            });
-        });
-    </script>
-
-<?php
-if (isset($_POST['pridaj'])) {
-    $chyby = array();
-    $data = array();
-    if (empty($_POST['id']))
-        $chyby['id'] = 'Musí byť zadané id produktu.';
-    if (empty($_POST['mnozstvo']))
-        $chyby['mnozstvo'] = 'Musí byť zadané množstvo.';
-    if (!empty($chyby)) {
-        $data['success'] = false;
-        $data['chyby'] = $chyby;
-    } else {
-        $id = (int)$_POST["id"];
-        $mnozstvo = (int)$_POST["mnozstvo"];
-        $selectProdukt = "select * from produkt where ID = '" . $id . "'";
-        $vysledok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectProdukt));
-        if (!isset($_SESSION["kosik"])) {
-            $predmetyVkosiku = array($id => $mnozstvo);
-            $_SESSION["kosik"] = $predmetyVkosiku;
-        }
-        if (array_key_exists($id, $_SESSION["kosik"]))
-            $_SESSION["kosik"][$id] += $mnozstvo;
-        else
-            $_SESSION["kosik"][$id] = $mnozstvo;
-        $pridanyPredmet = "Produkt bol vložený do košíka!";
-        echo "<script type='text/javascript'>alert('$pridanyPredmet');</script>";
-        $data['success'] = true;
-        $data['odpoved'] = 'Produkt bol vložený do košíka!';
-    }
-    echo json_encode($data);
-}
