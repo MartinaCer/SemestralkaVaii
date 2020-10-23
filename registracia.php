@@ -4,7 +4,8 @@ require_once "pripojenie.php";
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registrácia</title>
         <link href="styly.css" rel="stylesheet">
     </head>
@@ -39,7 +40,7 @@ if (isset($_POST["zaregistruj"])) {
             mysqli_query($mysqli, $insert);
             header("Location: prihlasenie.php");
         } else
-            echo "<script type='text/javascript'>alert('\"Toto meno sa uz používa!\"');</script>";
+            echo "<script type='text/javascript'>alert('Toto meno sa uz používa!');</script>";
     }
 }
 ?>

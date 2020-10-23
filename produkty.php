@@ -4,7 +4,8 @@ require_once "pripojenie.php";
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Produkty</title>
         <link href="styly.css" rel="stylesheet">
     </head>
@@ -30,7 +31,7 @@ require_once "pripojenie.php";
                     <div class="produktInfo">
                         <h2><?php echo $riadok["meno"]; ?></h2>
                         <h3><?php echo $riadok["cena"] . " €"; ?></h3>
-                        <form action="produkty.php" method="post" name="form">
+                        <form method="post">
                             <input type="hidden" name="id" value="<?php echo $riadok["ID"]; ?>">
                             <input class="cislo" type="number" name="mnozstvo" value="1" min="1"/>
                             <input class="button" name="vloz" type="submit" value="Vlož do košíka">
@@ -44,3 +45,21 @@ require_once "pripojenie.php";
     </section>
     </body>
     </html>
+<?php
+if (isset($_POST["vloz"])) {
+    $id = (int)$_POST["id"];
+    $mnozstvo = (int)$_POST["mnozstvo"];
+    $selectProdukt = "select * from produkt where ID = '" . id . "'";
+    $vysledok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectProdukt));
+    if (!isset($_SESSION["kosik"])) {
+        $predmetyVkosiku = array($id => $mnozstvo);
+        $_SESSION["kosik"] = $predmetyVkosiku;
+    } else {
+        if (array_key_exists($id, $_SESSION["kosik"]))
+            $_SESSION["kosik"][$id] += $mnozstvo;
+        else
+            $_SESSION["kosik"][$id] = $mnozstvo;
+    }
+    echo "<script type='text/javascript'>alert('Produkt bol vložený do košíka!');</script>";
+    exit;
+}

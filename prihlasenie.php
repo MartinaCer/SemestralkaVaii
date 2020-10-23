@@ -4,7 +4,8 @@ require_once "pripojenie.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlásenie</title>
     <link href="styly.css" rel="stylesheet">
 </head>
@@ -16,7 +17,7 @@ require_once "pripojenie.php";
     <h2>Je potrebné prihlásenie, zadajte svoje meno a heslo.</h2>
     <form class="formular" id="login" method="post">
         <input name="meno" id="meno" placeholder="Login" type="text"><br><br>
-        <input name="heslo" id=meno" placeholder="Heslo" type="password"><br><br>
+        <input name="heslo" id="heslo" placeholder="Heslo" type="password"><br><br>
         <input class="button" name="prihlas" id="prihlas" type="submit" value="Prihláste sa!">
     </form>
     Ešte nemáte vytvorený účet? <a href="registracia.php"><b>Zaregistrujte sa!</b></a>
@@ -42,10 +43,10 @@ if (isset($_POST["prihlas"])) {
                 $_SESSION["meno"] = $meno;
                 header("Location: produkty.php");
             } else {
-                echo "<script type='text/javascript'>alert('\"Zadali ste nesprávne heslo!\"');</script>";
+                echo "<script type='text/javascript'>alert('Zadali ste nesprávne heslo!');</script>";
             }
         } else {
-            echo "<script type='text/javascript'>alert('\"Zadali ste nesprávne meno!\"');</script>";
+            echo "<script type='text/javascript'>alert('Zadali ste nesprávne meno!');</script>";
         }
     }
 }
