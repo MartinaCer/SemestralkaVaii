@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION["meno"])) {
+    header("Location: prihlasenie.php");
+}
 $_SESSION = array();
 if (ini_get("session.use_cookies")) {
     $par = session_get_cookie_params();

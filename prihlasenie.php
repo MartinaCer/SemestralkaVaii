@@ -41,6 +41,7 @@ if (isset($_POST["prihlas"])) {
             $hashHeslo = $riadok1["heslo"];
             if (password_verify($heslo, $hashHeslo)) {
                 $_SESSION["meno"] = $meno;
+                $_SESSION["admin"] = $riadok1["admin"];
                 header("Location: produkty.php");
             } else {
                 echo "<script type='text/javascript'>alert('Zadali ste nesprávne heslo!');</script>";

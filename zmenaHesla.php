@@ -14,6 +14,9 @@
 </div>
 <?php
 include "menu.php";
+if (!isset($_SESSION["meno"])) {
+    header("Location: prihlasenie.php");
+}
 ?>
 <form class="formular" id="zmenaHesla" method="post">
     <input id="stare" name="stare" placeholder="Pôvodné heslo" type="password"><br><br>

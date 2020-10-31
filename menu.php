@@ -12,7 +12,10 @@ require_once "pripojenie.php";
 </ul>
 <script>
     window.onload = function () {
-        var x = document.getElementById("admin");
-        x.style.visibility = "hidden";
+        var admin = <?php echo $_SESSION["admin"];?>;
+        if (admin == 0) {
+            var x = document.getElementById("admin");
+            x.style.visibility = "hidden";
+        }
     };
 </script>
