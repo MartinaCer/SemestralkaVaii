@@ -16,6 +16,29 @@ include "menu.php";
 if (!isset($_SESSION["meno"])) {
     header("Location: prihlasenie.php");
 }
+$id = $_SESSION["id"];
+$selectHistoria = "select * from historia where IDpouzivatel='" . $id . "'";
+$historia = mysqli_query($mysqli, $selectHistoria);
 ?>
+<table>
+    <thead>
+    <tr>
+        <th>Celková suma</th>
+        <th>Dátum</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    while ($riadok = $historia->fetch_array()) {
+        ?>
+        <tr>
+            <td><?php echo $riadok["suma"] . " €"; ?></td>
+            <td><?php echo $riadok["datum"]; ?></td>
+        </tr>
+        <?php
+    }
+    ?>
+    </tbody>
+</table>
 </body>
 </html>

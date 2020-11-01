@@ -40,7 +40,7 @@ if (isset($_POST["zaregistruj"])) {
             mysqli_query($mysqli, $insert);
             header("Location: prihlasenie.php");
         } else
-            echo "<script type='text/javascript'>alert('Toto meno sa uz používa!');</script>";
+            echo "<h2>Toto meno sa už používa!</h2>";
     }
 }
 ?>

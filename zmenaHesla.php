@@ -51,18 +51,14 @@ if (isset($_POST["stare"])) {
     $stare = $_POST["stare"];
     $nove = $_POST["nove"];
     $noveKontrola = $_POST["noveKontrola"];
-    $selectPouzivatel = "select heslo from pouzivatel where meno ='" . $_SESSION["meno"] . "'";
+    $selectPouzivatel = "select heslo from pouzivatel where ID ='" . $_SESSION["id"] . "'";
     $riadok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectPouzivatel));
     if (password_verify($stare, $riadok["heslo"])) {
         if ($nove == $noveKontrola) {
             $hashNoveHeslo = password_hash($nove, PASSWORD_DEFAULT);
-            $updateHeslo = "update pouzivatel set heslo='" . $hashNoveHeslo . "' where meno ='" . $_SESSION["meno"] . "'";
+            $updateHeslo = "update pouzivatel set heslo='" . $hashNoveHeslo . "' where ID ='" . $_SESSION["id"] . "'";
             mysqli_query($mysqli, $updateHeslo);
-            echo "<div class='formular'>Heslo bolo zmenené.</div>";
-        } else {
-            echo "<div class='formular'>Heslá sa nezhodujú.</div>";
+            echo "<h2>Heslo bolo zmenené!</h2>";
         }
-    } else {
-        echo "<div class='formular'>Zadali ste nesprávne heslo.</div>";
     }
 }

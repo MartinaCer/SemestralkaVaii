@@ -64,11 +64,8 @@ if (!isset($_SESSION["meno"])) {
     </tr>
     <tr>
         <td colspan="3">
-            <h2><?php echo $_SESSION["admin"]; ?> Celková cena: <?php echo $celkovo . " €"; ?>
-                <h2>
-                    <form method="post" action="objednavka.php">
-                        <input type="submit" value="Objednaj" name="objednaj" class="button">
-                    </form>
+            <h2>Celková cena: <?php echo $celkovo . " €"; ?></h2>
+            <button id="objednaj" class="button">Objednaj</button>
         </td>
         <td>
             <form method="get">
@@ -78,6 +75,38 @@ if (!isset($_SESSION["meno"])) {
     </tr>
     </tbody>
 </table>
+<div id="objednajModal" class="divModal">
+    <div class="modalText">
+        <span class="modalZavri">&times;</span>
+        <h1>Skutočne chcete kúpiť tovar v hodnote: </h1>
+        <h1><?php echo $celkovo . " €" . "?"; ?></h1>
+        <form method="post">
+            <input type="hidden" value="<?php echo $celkovo ?>" name="celkovaSuma">
+            <input type="submit" value="Áno, chcem objednať" name="modalObjednaj" class="button">
+        </form>
+    </div>
+</div>
+<div id="prazdnyModal" class="divModal">
+    <div class="modalText">
+        <span class="modalZavri">&times;</span>
+        <h1>Váš košík je prázdny!</h1>
+    </div>
+</div>
+<script>
+    var suma = <?php echo $celkovo?>;
+    var modal = suma > 0 ? document.getElementById("objednajModal") : document.getElementById("prazdnyModal");
+    document.getElementById("objednaj").onclick = function () {
+        modal.style.display = "block";
+    }
+    document.getElementsByClassName("modalZavri")[0].onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>
 <?php
@@ -90,4 +119,13 @@ if (isset($_POST["zmenMnozstvo"])) {
 if (isset($_GET["vymaz"])) {
     $_SESSION["kosik"] = array();
     header("Refresh:0; url=kosik.php");
+}
+if (isset($_POST["modalObjednaj"])) {
+    $id = $_SESSION["id"];
+    $sucet = $_POST["celkovaSuma"];
+    $insert = "insert into historia(IDpouzivatel, suma) values('$id', '$sucet')";
+    mysqli_query($mysqli, $insert);
+    $_SESSION["kosik"] = array();
+    $celkovo = 0;
+    header("Refresh:0; url=produkty.php");
 }
