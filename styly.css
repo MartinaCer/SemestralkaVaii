@@ -32,27 +32,89 @@ td {
     border: 3px outset blue;
     background-color: dodgerblue;
     text-align: center;
+    margin-bottom: 1%;
+}
+
+.divHlavicka p {
+    display: inline;
+    font-size: larger;
+}
+
+.divHlavicka .nadpis {
+    width: 50%;
+}
+
+.divHlavicka .menuIkona {
+    font-size: xx-large;
+    cursor: pointer;
+    top: 2%;
+    left: 2%;
+    position: absolute;
+}
+
+.divHlavicka .menuOdhlas {
+    height: 9%;
+    top: 3%;
+    right: 2%;
+    position: absolute;
 }
 
 .menu {
+    height: 100%;
+    width: 0%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 1%;
+    border: 0px;
+    background-color: dodgerblue;
+}
+
+.menu a {
+    font-size: large;
+    color: black;
+    display: block;
+    transition: 0.3s;
+    padding-top: 5%;
+    padding-left: 1%;
+}
+
+.menu a:hover {
+    color: yellow;
+}
+
+.menu .menuZavri {
+    position: absolute;
+    top: 0;
+    right: 1%;
+    font-size: xx-large;
+    margin-left: 2%;
+}
+
+.adminMenu {
     padding: 0;
 }
 
-.menuFont {
+.adminMenuFont {
     font-size: large;
 }
 
-.menuStranka {
+.adminMenuStranka {
     display: inline-block;
     background: dodgerblue;
     border: 1px solid;
     padding: 5px;
     margin: 0 auto;
+    cursor: pointer;
 }
 
-.menuStranka:hover {
+.adminMenuStranka:hover {
     background: blue;
 }
+
 
 .sectionProdukty {
     display: flex;
@@ -149,3 +211,4 @@ td {
     text-decoration: none;
     cursor: pointer;
 }
+

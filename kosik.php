@@ -8,15 +8,14 @@
 </head>
 <body>
 <div class="divHlavicka">
-    <h1>Najlepší e-shop</h1>
+    <?php
+    include "menu.php";
+    if (!isset($_SESSION["meno"])) {
+        header("Location: prihlasenie.php");
+    }
+    ?>
     <p>Vo vašom nákupnom košíku máte nasledovné produkty. Môžete buď pokračovať v nákupe alebo objednávku uzavrieť.</p>
 </div>
-<?php
-include "menu.php";
-if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
-};
-?>
 <table>
     <thead>
     <tr>

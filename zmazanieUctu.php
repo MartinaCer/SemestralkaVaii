@@ -8,15 +8,14 @@
 </head>
 <body>
 <div class="divHlavicka">
-    <h1>Najlepší e-shop</h1>
+    <?php
+    include "menu.php";
+    if (!isset($_SESSION["meno"])) {
+        header("Location: prihlasenie.php");
+    }
+    ?>
     <p>To je škoda :(. Ak skutočne chcete zmazať svoj účet, potvrďte voľbu dole.</p>
 </div>
-<?php
-include "menu.php";
-if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
-}
-?>
 <form class="formular" method="post">
     <input name="heslo" placeholder="Heslo" type="password"><br><br>
     <input class="button" name="zmaz" type="submit" value="Zmaž účet">

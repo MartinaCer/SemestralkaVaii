@@ -8,15 +8,14 @@
 </head>
 <body>
 <div class="divHlavicka">
-    <h1>Najlepší e-shop</h1>
+    <?php
+    include "menu.php";
+    if (!isset($_SESSION["meno"])) {
+        header("Location: prihlasenie.php");
+    }
+    ?>
     <p>Vyberte si produkt! Ak vás nejaký produkt z našej bohatej ponuky zaujal, neváhajte a kúpte si ho.</p>
 </div>
-<?php
-include "menu.php";
-if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
-}
-?>
 <section class="sectionProdukty">
     <?php
     $selectProdukty = "select * from produkt order by ID";

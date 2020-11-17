@@ -9,15 +9,14 @@
 </head>
 <body>
 <div class="divHlavicka">
-    <h1>Najlepší e-shop</h1>
+    <?php
+    include "menu.php";
+    if (!isset($_SESSION["meno"])) {
+        header("Location: prihlasenie.php");
+    }
+    ?>
     <p>Zmena hesla! Môžete si zmeniť heslo do vášho účtu.</p>
 </div>
-<?php
-include "menu.php";
-if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
-}
-?>
 <form class="formular" id="zmenaHesla" method="post">
     <input id="stare" name="stare" placeholder="Pôvodné heslo" type="password"><br><br>
     <input id="nove" name="nove" placeholder="Nové heslo" type="password"><br><br>

@@ -11,7 +11,7 @@ require_once "pripojenie.php";
     </head>
     <body>
     <div class="divHlavicka">
-        <h1>Najlepší e-shop</h1>
+        <img class="nadpis" src="obrazky/nadpis.JPG">
     </div>
     <div class="formular">
         <h2>Vytvorte si nový účet.</h2>

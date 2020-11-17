@@ -8,14 +8,15 @@
 </head>
 <body>
 <div class="divHlavicka">
-    <h1>Najlepší e-shop</h1>
+    <?php
+    include "menu.php";
+    if (!isset($_SESSION["meno"])) {
+        header("Location: prihlasenie.php");
+    }
+    ?>
     <p>Tu môžete vidieť prehľad vašich minulých nákupov v našom obchode.</p>
 </div>
 <?php
-include "menu.php";
-if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
-}
 $id = $_SESSION["id"];
 $selectHistoria = "select * from historia where IDpouzivatel='" . $id . "'";
 $historia = mysqli_query($mysqli, $selectHistoria);
