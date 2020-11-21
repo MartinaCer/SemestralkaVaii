@@ -16,8 +16,8 @@ require_once "pripojenie.php";
 <div class="formular">
     <h2>Je potrebné prihlásenie, zadajte svoje meno a heslo.</h2>
     <form class="formular" id="login" method="post">
-        <input name="meno" id="meno" placeholder="Login" type="text"><br><br>
-        <input name="heslo" id="heslo" placeholder="Heslo" type="password"><br><br>
+        <input name="meno" id="meno" placeholder="Login" type="text" required><br><br>
+        <input name="heslo" id="heslo" placeholder="Heslo" type="password" required><br><br>
         <input class="button" name="prihlas" id="prihlas" type="submit" value="Prihláste sa!">
     </form>
     Ešte nemáte vytvorený účet? <a href="registracia.php"><b>Zaregistrujte sa!</b></a>

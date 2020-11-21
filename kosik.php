@@ -122,7 +122,13 @@ if (isset($_GET["vymaz"])) {
 if (isset($_POST["modalObjednaj"])) {
     $id = $_SESSION["id"];
     $sucet = $_POST["celkovaSuma"];
-    $insert = "insert into historia(IDpouzivatel, suma) values('$id', '$sucet')";
+    $pocetPoloziek = 0;
+    foreach ($_SESSION["kosik"] as $k => $v) {
+        $pocetPoloziek += $v;
+        $updateProdukt = "update produkt set pocetPredanych = pocetPredanych + '$v' where ID = '$k'";
+        mysqli_query($mysqli, $updateProdukt);
+    }
+    $insert = "insert into historia(IDpouzivatel, pocetPoloziek, suma) values('$id', '$pocetPoloziek', '$sucet')";
     mysqli_query($mysqli, $insert);
     $_SESSION["kosik"] = array();
     $celkovo = 0;

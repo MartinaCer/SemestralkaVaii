@@ -25,6 +25,7 @@ $historia = mysqli_query($mysqli, $selectHistoria);
     <thead>
     <tr>
         <th>Celková suma</th>
+        <th>Počet položiek</th>
         <th>Dátum</th>
     </tr>
     </thead>
@@ -34,6 +35,7 @@ $historia = mysqli_query($mysqli, $selectHistoria);
         ?>
         <tr>
             <td><?php echo $riadok["suma"] . " €"; ?></td>
+            <td><?php echo $riadok["pocetPoloziek"]; ?></td>
             <td><?php echo $riadok["datum"]; ?></td>
         </tr>
         <?php

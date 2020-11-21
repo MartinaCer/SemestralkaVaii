@@ -17,7 +17,7 @@
     <p>To je škoda :(. Ak skutočne chcete zmazať svoj účet, potvrďte voľbu dole.</p>
 </div>
 <form class="formular" method="post">
-    <input name="heslo" placeholder="Heslo" type="password"><br><br>
+    <input name="heslo" placeholder="Heslo" type="password" required><br><br>
     <input class="button" name="zmaz" type="submit" value="Zmaž účet">
 </form>
 </body>

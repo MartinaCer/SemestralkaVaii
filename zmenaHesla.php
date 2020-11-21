@@ -18,9 +18,9 @@
     <p>Zmena hesla! Môžete si zmeniť heslo do vášho účtu.</p>
 </div>
 <form class="formular" id="zmenaHesla" method="post">
-    <input id="stare" name="stare" placeholder="Pôvodné heslo" type="password"><br><br>
-    <input id="nove" name="nove" placeholder="Nové heslo" type="password"><br><br>
-    <input id="noveKontrola" name="noveKontrola" placeholder="Kontrola hesla" type="password"><br><br>
+    <input id="stare" name="stare" placeholder="Pôvodné heslo" type="password" required><br><br>
+    <input id="nove" name="nove" placeholder="Nové heslo" type="password" required><br><br>
+    <input id="noveKontrola" name="noveKontrola" placeholder="Kontrola hesla" type="password" required><br><br>
     <input class="button" id="zmenHeslo" name="zmenHeslo" type="submit" value="Zmeň heslo!">
 </form>
 <script>

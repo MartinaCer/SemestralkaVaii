@@ -25,20 +25,42 @@
 </ul>
 <table id="tabulka">
     <thead>
-    <tr>
-        <th id="h1"></th>
-        <th id="h2"></th>
-        <th id="h3"></th>
-        <th id="h4">Akcia</th>
-    </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
+<div id="pridajProduktModal" class="divModal">
+    <div class="modalText">
+        <span class="modalZavri">&times;</span>
+        <h1>Pridaj nový produkt: </h1>
+        <form style="align-content: center" method="post">
+            <label for="nazov">Názov produktu</label><br>
+            <input type="text" placeholder="Názov" name="nazov" id="nazov" required><br><br>
+            <label for="nazov">Súbor s obrázkom produktu (nemusí byť zadaný)</label><br>
+            <input type="text" placeholder="Obrázok" name="obrazok" id="obrazok"><br><br>
+            <label for="nazov">Cena produktu</label><br>
+            <input type="number" placeholder="Cena" name="cena" min="1" id="cena" required><br><br>
+            <input type="submit" value="Pridaj produkt" name="pridaj" class="button">
+        </form>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
+        const modal = document.getElementById("pridajProduktModal");
+        document.getElementById("pridajProdukt").onclick = function () {
+            modal.style.display = "block";
+        }
+        document.getElementsByClassName("modalZavri")[0].onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
         document.getElementById("tabulka").style.visibility = "hidden";
         $("#pouzivatelia").click(function () {
+            $("#tabulka thead").empty();
             $("#tabulka tbody").empty();
             $.ajax({
                 url: 'administratorAjax.php',
@@ -50,24 +72,29 @@
                 success: function (data) {
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
-                        var meno = data[i].meno;
-                        var datum = data[i].registracia;
-                        var admin = data[i].admin;
-                        var tr_str = "<tr>" +
-                            "<td>" + meno + "</td>" +
-                            "<td>" + datum + "</td>" +
-                            "<td>" + admin + "</td>" +
+                        var riadok = "<tr>" +
+                            "<td>" + data[i].meno + "</td>" +
+                            "<td>" + data[i].mail + "</td>" +
+                            "<td>" + data[i].telefon + "</td>" +
+                            "<td>" + data[i].registracia + "</td>" +
+                            "<td>" + data[i].admin + "</td>" +
                             "</tr>";
-                        $("#tabulka tbody").append(tr_str);
+                        $("#tabulka tbody").append(riadok);
                     }
                 }
             });
             document.getElementById("tabulka").style.visibility = "visible";
-            $("#h1").html("Používateľ");
-            $("#h2").html("Dátum registrácie");
-            $("#h3").html("Je administrátor");
+            var hlavicka = "<tr>" +
+                "<th> Používateľ </th>" +
+                "<th> E-mail </th>" +
+                "<th> Telefónne číslo </th>" +
+                "<th> Dátum registrácie </th>" +
+                "<th> Je administrátor </th>" +
+                "</tr>";
+            $("#tabulka thead").append(hlavicka);
         });
         $("#objednavky").click(function () {
+            $("#tabulka thead").empty();
             $("#tabulka tbody").empty();
             $.ajax({
                 url: 'administratorAjax.php',
@@ -79,24 +106,27 @@
                 success: function (data) {
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
-                        var meno = data[i].meno;
-                        var datum = data[i].datum;
-                        var suma = data[i].suma;
-                        var tr_str = "<tr>" +
-                            "<td>" + meno + "</td>" +
-                            "<td>" + datum + "</td>" +
-                            "<td>" + suma + "</td>" +
+                        var riadok = "<tr>" +
+                            "<td>" + data[i].meno + "</td>" +
+                            "<td>" + data[i].datum + "</td>" +
+                            "<td>" + data[i].pocet + "</td>" +
+                            "<td>" + data[i].suma + "</td>" +
                             "</tr>";
-                        $("#tabulka tbody").append(tr_str);
+                        $("#tabulka tbody").append(riadok);
                     }
                 }
             });
             document.getElementById("tabulka").style.visibility = "visible";
-            $("#h1").html("Používateľ");
-            $("#h2").html("Dátum nákupu");
-            $("#h3").html("Celková suma");
+            var hlavicka = "<tr>" +
+                "<th> Používateľ </th>" +
+                "<th> Dátum nákupu </th>" +
+                "<th> Počet položiek </th>" +
+                "<th> Celková suma </th>" +
+                "</tr>";
+            $("#tabulka thead").append(hlavicka);
         });
         $("#produkty").click(function () {
+            $("#tabulka thead").empty();
             $("#tabulka tbody").empty();
             $.ajax({
                 url: 'administratorAjax.php',
@@ -108,24 +138,34 @@
                 success: function (data) {
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
-                        var meno = data[i].meno;
-                        var obrazok = data[i].obrazok;
-                        var cena = data[i].cena;
-                        var tr_str = "<tr>" +
-                            "<td>" + meno + "</td>" +
-                            "<td>" + obrazok + "</td>" +
-                            "<td>" + cena + "</td>" +
+                        var riadok = "<tr>" +
+                            "<td>" + data[i].meno + "</td>" +
+                            "<td>" + data[i].obrazok + "</td>" +
+                            "<td>" + data[i].cena + "</td>" +
+                            "<td>" + data[i].pocet + "</td>" +
                             "</tr>";
-                        $("#tabulka tbody").append(tr_str);
+                        $("#tabulka tbody").append(riadok);
                     }
                 }
             });
             document.getElementById("tabulka").style.visibility = "visible";
-            $("#h1").html("Názov produktu");
-            $("#h2").html("Obrázok");
-            $("#h3").html("Cena");
+            var hlavicka = "<tr>" +
+                "<th> Názov produktu </th>" +
+                "<th> Súbor s obrázkom </th>" +
+                "<th> Cena produktu </th>" +
+                "<th> Počet predaných kusov </th>" +
+                "</tr>";
+            $("#tabulka thead").append(hlavicka);
         });
     });
 </script>
 </body>
 </html>
+<?php
+if (isset($_POST["pridaj"])) {
+    $nazov = $_POST["nazov"];
+    $obrazok = $_POST["obrazok"];
+    $cena = $_POST["cena"];
+    $insert = "insert into produkt(meno, obrazok, cena) values('$nazov', '$obrazok', '$cena')";
+    mysqli_query($mysqli, $insert);
+}
