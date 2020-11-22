@@ -10,9 +10,6 @@
 <div class="divHlavicka">
     <?php
     include "menu.php";
-    if (!isset($_SESSION["meno"])) {
-        header("Location: prihlasenie.php");
-    }
     ?>
     <p>Vo vašom nákupnom košíku máte nasledovné produkty. Môžete buď pokračovať v nákupe alebo objednávku uzavrieť.</p>
 </div>
@@ -80,7 +77,6 @@
         <h1>Skutočne chcete kúpiť tovar v hodnote: </h1>
         <h1><?php echo $celkovo . " €" . "?"; ?></h1>
         <form method="post">
-            <input type="hidden" value="<?php echo $celkovo ?>" name="celkovaSuma">
             <input type="submit" value="Áno, chcem objednať" name="modalObjednaj" class="button">
         </form>
     </div>
@@ -110,27 +106,13 @@
 </html>
 <?php
 if (isset($_POST["zmenMnozstvo"])) {
-    $noveMnozstvo = $_POST["mnozstvo"];
-    $produktId = $_POST["produkt"];
-    $_SESSION["kosik"][$produktId] = $noveMnozstvo;
-    header("Refresh:0; url=kosik.php");
+    zmenMnozstvoVKosiku($_POST["produkt"], $_POST["mnozstvo"]);
 }
 if (isset($_GET["vymaz"])) {
-    $_SESSION["kosik"] = array();
-    header("Refresh:0; url=kosik.php");
+    vymazKosik();
 }
 if (isset($_POST["modalObjednaj"])) {
-    $id = $_SESSION["id"];
-    $sucet = $_POST["celkovaSuma"];
-    $pocetPoloziek = 0;
-    foreach ($_SESSION["kosik"] as $k => $v) {
-        $pocetPoloziek += $v;
-        $updateProdukt = "update produkt set pocetPredanych = pocetPredanych + '$v' where ID = '$k'";
-        mysqli_query($mysqli, $updateProdukt);
-    }
-    $insert = "insert into historia(IDpouzivatel, pocetPoloziek, suma) values('$id', '$pocetPoloziek', '$sucet')";
-    mysqli_query($mysqli, $insert);
-    $_SESSION["kosik"] = array();
+    objednaj($celkovo, $mysqli);
     $celkovo = 0;
     header("Refresh:0; url=produkty.php");
 }

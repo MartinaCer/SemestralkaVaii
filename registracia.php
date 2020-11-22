@@ -1,5 +1,5 @@
 <?php
-require_once "pripojenie.php";
+require_once "pouzivatelFunkcie.php";
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -18,6 +18,8 @@ require_once "pripojenie.php";
         <form class="formular" id="registracia" method="post">
             <input name="meno" id="meno" placeholder="Login" type="text" required><br><br>
             <input name="heslo" id="heslo" placeholder="Heslo" type="password" required><br><br>
+            <input name="hesloKontrola" id="hesloKontrola" placeholder="Kontrola hesla" type="password"
+                   required><br><br>
             <input name="email" id="email" placeholder="Email" type="email" required
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"><br><br>
             <input name="telefon" id="telefon" placeholder="Telefónne číslo" type="tel" required
@@ -31,22 +33,8 @@ require_once "pripojenie.php";
 
 <?php
 if (isset($_POST["zaregistruj"])) {
-    $meno = mysqli_real_escape_string($mysqli, $_POST["meno"]);
-    $heslo = mysqli_real_escape_string($mysqli, $_POST["heslo"]);
-    $mail = mysqli_real_escape_string($mysqli, $_POST["email"]);
-    $cislo = mysqli_real_escape_string($mysqli, $_POST["telefon"]);
-    $hashHeslo = password_hash($heslo, PASSWORD_DEFAULT);
-    if ($meno != "" && $heslo != "") {
-        $query = "select count(*) as pocet from pouzivatel where meno='" . $meno . "'";
-        $vysledok = mysqli_query($mysqli, $query);
-        $riadok = mysqli_fetch_array($vysledok);
-        $pocet = $riadok["pocet"];
-        if ($pocet == 0) {
-            $insert = "insert into pouzivatel(meno, heslo, mail, telefon) values ('$meno', '$hashHeslo', '$mail', '$cislo')";
-            mysqli_query($mysqli, $insert);
-            header("Location: prihlasenie.php");
-        } else
-            echo "<h2>Toto meno sa už používa!</h2>";
-    }
+    registruj(mysqli_real_escape_string($mysqli, $_POST["meno"]), mysqli_real_escape_string($mysqli, $_POST["heslo"]),
+        mysqli_real_escape_string($mysqli, $_POST["hesloKontrola"]), mysqli_real_escape_string($mysqli, $_POST["email"]),
+        mysqli_real_escape_string($mysqli, $_POST["telefon"]), $mysqli);
 }
 ?>

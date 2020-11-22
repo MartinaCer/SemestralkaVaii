@@ -10,9 +10,6 @@
 <div class="divHlavicka">
     <?php
     include "menu.php";
-    if (!isset($_SESSION["meno"])) {
-        header("Location: prihlasenie.php");
-    }
     ?>
     <p>Vyberte si produkt! Ak vás nejaký produkt z našej bohatej ponuky zaujal, neváhajte a kúpte si ho.</p>
 </div>
@@ -44,18 +41,5 @@
 </html>
 <?php
 if (isset($_POST["vloz"])) {
-    $id = (int)$_POST["id"];
-    $mnozstvo = (int)$_POST["mnozstvo"];
-    $selectProdukt = "select * from produkt where ID = '" . id . "'";
-    $vysledok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectProdukt));
-    if (!isset($_SESSION["kosik"])) {
-        $predmetyVkosiku = array($id => $mnozstvo);
-        $_SESSION["kosik"] = $predmetyVkosiku;
-    } else {
-        if (array_key_exists($id, $_SESSION["kosik"]))
-            $_SESSION["kosik"][$id] += $mnozstvo;
-        else
-            $_SESSION["kosik"][$id] = $mnozstvo;
-    }
-    exit;
+    vlozDoKosika((int)$_POST["id"], (int)$_POST["mnozstvo"], $mysqli);
 }

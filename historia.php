@@ -10,9 +10,6 @@
 <div class="divHlavicka">
     <?php
     include "menu.php";
-    if (!isset($_SESSION["meno"])) {
-        header("Location: prihlasenie.php");
-    }
     ?>
     <p>Tu môžete vidieť prehľad vašich minulých nákupov v našom obchode.</p>
 </div>

@@ -1,5 +1,5 @@
 <?php
-require_once "pripojenie.php";
+require_once "pouzivatelFunkcie.php"
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,29 +27,6 @@ require_once "pripojenie.php";
 
 <?php
 if (isset($_POST["prihlas"])) {
-    $meno = mysqli_real_escape_string($mysqli, $_POST["meno"]);
-    $heslo = mysqli_real_escape_string($mysqli, $_POST["heslo"]);
-    if ($meno != "" && $heslo != "") {
-        $selectMeno = "select count(*) as pocet from pouzivatel where meno='" . $meno . "'";
-        $vysledok = mysqli_query($mysqli, $selectMeno);
-        $riadok = mysqli_fetch_array($vysledok);
-        $pocet = $riadok["pocet"];
-        if ($pocet > 0) {
-            $selectHeslo = "select * from pouzivatel where meno='" . $meno . "'";
-            $vysledok1 = mysqli_query($mysqli, $selectHeslo);
-            $riadok1 = mysqli_fetch_array($vysledok1);
-            $hashHeslo = $riadok1["heslo"];
-            if (password_verify($heslo, $hashHeslo)) {
-                $_SESSION["meno"] = $meno;
-                $_SESSION["id"] = $riadok1["ID"];
-                $_SESSION["admin"] = $riadok1["admin"];
-                header("Location: produkty.php");
-            } else {
-                echo "<h2>Zadali ste nesprávne heslo!</h2>";
-            }
-        } else {
-            echo "<h2>Zadali ste nesprávne meno!</h2>";
-        }
-    }
+    prihlas(mysqli_real_escape_string($mysqli, $_POST["meno"]), mysqli_real_escape_string($mysqli, $_POST["heslo"]), $mysqli);
 }
 ?>

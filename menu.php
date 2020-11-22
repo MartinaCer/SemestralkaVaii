@@ -1,5 +1,10 @@
 <?php
 require_once "pripojenie.php";
+require_once "pouzivatelFunkcie.php";
+require_once "nakupFunkcie.php";
+if (!isset($_SESSION["meno"])) {
+    header("Location: prihlasenie.php");
+}
 ?>
 <div id="navigacia" class="menu">
     <a href="javascript:void(0)" class="menuZavri" onclick="zavriMenu()">&times;</a>

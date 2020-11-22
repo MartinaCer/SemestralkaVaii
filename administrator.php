@@ -11,9 +11,6 @@
 <div class="divHlavicka">
     <?php
     include "menu.php";
-    if (!isset($_SESSION["meno"])) {
-        header("Location: prihlasenie.php");
-    }
     ?>
     <p>Administrácia</p>
 </div>

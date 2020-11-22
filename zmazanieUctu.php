@@ -10,9 +10,6 @@
 <div class="divHlavicka">
     <?php
     include "menu.php";
-    if (!isset($_SESSION["meno"])) {
-        header("Location: prihlasenie.php");
-    }
     ?>
     <p>To je škoda :(. Ak skutočne chcete zmazať svoj účet, potvrďte voľbu dole.</p>
 </div>
@@ -23,17 +20,5 @@
 </body>
 </html>
 <?php if (isset($_POST["zmaz"])) {
-    $heslo = $_POST["heslo"];
-    $selectPouzivatel = "select * from pouzivatel where ID ='" . $_SESSION["id"] . "'";
-    $riadok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectPouzivatel));
-    if (password_verify($heslo, $riadok["heslo"])) {
-        $id = $_SESSION["id"];
-        $deleteHistoria = "delete from historia where IDpouzivatel='" . $id . "'";
-        mysqli_query($mysqli, $deleteHistoria);
-        $deletePouzivatel = "delete from pouzivatel where ID='" . $id . "'";
-        mysqli_query($mysqli, $deletePouzivatel);
-        header("Location: odhlasenie.php");
-    } else {
-        echo "<h2>Zadali ste nesprávne heslo!</h2>";
-    }
+    zmazUcet($_POST["heslo"], $mysqli);
 }
