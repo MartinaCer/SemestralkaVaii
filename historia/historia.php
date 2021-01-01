@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>História objednávok</title>
-    <link href="styly.css" rel="stylesheet">
+    <link href="../styly.css" rel="stylesheet">
 </head>
 <body>
 <div class="divHlavicka">
     <?php
-    include "menu.php";
+    include "../menu.php";
     ?>
     <p>Tu môžete vidieť prehľad vašich minulých nákupov v našom obchode.</p>
 </div>

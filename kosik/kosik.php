@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Košík</title>
-    <link href="styly.css" rel="stylesheet">
+    <link href="../styly.css" rel="stylesheet">
 </head>
 <body>
 <div class="divHlavicka">
     <?php
-    include "menu.php";
+    include "../menu.php";
     ?>
     <p>Vo vašom nákupnom košíku máte nasledovné produkty. Môžete buď pokračovať v nákupe alebo objednávku uzavrieť.</p>
 </div>
@@ -106,13 +106,26 @@
 </html>
 <?php
 if (isset($_POST["zmenMnozstvo"])) {
-    zmenMnozstvoVKosiku($_POST["produkt"], $_POST["mnozstvo"]);
+    $produktId = $_POST["produkt"];
+    $noveMnozstvo = $_POST["mnozstvo"];
+    $_SESSION["kosik"][$produktId] = $noveMnozstvo;
+    header("Refresh:0; url=kosik.php");
 }
 if (isset($_GET["vymaz"])) {
-    vymazKosik();
+    $_SESSION["kosik"] = array();
+    header("Refresh:0; url=kosik.php");
 }
 if (isset($_POST["modalObjednaj"])) {
-    objednaj($celkovo, $mysqli);
+    $id = $_SESSION["id"];
+    $pocetPoloziek = 0;
+    foreach ($_SESSION["kosik"] as $k => $v) {
+        $pocetPoloziek += $v;
+        $updateProdukt = "update produkt set pocetPredanych = pocetPredanych + '$v' where ID = '$k'";
+        mysqli_query($mysqli, $updateProdukt);
+    }
+    $insert = "insert into historia(IDpouzivatel, pocetPoloziek, suma) values('$id', '$pocetPoloziek', '$celkovo')";
+    mysqli_query($mysqli, $insert);
+    $_SESSION["kosik"] = array();
     $celkovo = 0;
-    header("Refresh:0; url=produkty.php");
+    header("Refresh:0; url=../produkty/produkty.php");
 }

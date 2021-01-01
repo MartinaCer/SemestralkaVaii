@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produkty</title>
-    <link href="styly.css" rel="stylesheet">
+    <link href="../styly.css" rel="stylesheet">
 </head>
 <body>
 <div class="divHlavicka">
     <?php
-    include "menu.php";
+    include "../menu.php";
     ?>
     <p>Vyberte si produkt! Ak vás nejaký produkt z našej bohatej ponuky zaujal, neváhajte a kúpte si ho.</p>
 </div>
@@ -21,7 +21,7 @@
         ?>
         <div class="produktObal">
             <div class="produktObrazok">
-                <img alt="<?php echo $riadok["meno"]; ?>" src="obrazky/<?php echo $riadok["obrazok"]; ?>">
+                <img alt="<?php echo $riadok["meno"]; ?>" src="../obrazky/<?php echo $riadok["obrazok"]; ?>">
             </div>
             <div class="produktInfo">
                 <h2><?php echo $riadok["meno"]; ?></h2>
@@ -41,5 +41,18 @@
 </html>
 <?php
 if (isset($_POST["vloz"])) {
-    vlozDoKosika((int)$_POST["id"], (int)$_POST["mnozstvo"], $mysqli);
+    $id = (int)$_POST["id"];
+    $mnozstvo = (int)$_POST["mnozstvo"];
+    $selectProdukt = "select * from produkt where ID = '" . $id . "'";
+    $vysledok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectProdukt));
+    if (!isset($_SESSION["kosik"])) {
+        $predmetyVkosiku = array($id => $mnozstvo);
+        $_SESSION["kosik"] = $predmetyVkosiku;
+    } else {
+        if (array_key_exists($id, $_SESSION["kosik"]))
+            $_SESSION["kosik"][$id] += $mnozstvo;
+        else
+            $_SESSION["kosik"][$id] = $mnozstvo;
+    }
+    exit;
 }

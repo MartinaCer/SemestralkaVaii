@@ -1,5 +1,5 @@
 <?php
-require_once "pripojenie.php";
+require_once "../pripojenie.php";
 $operacia = $_GET["operacia"];
 $jsonPole = array();
 switch ($operacia) {

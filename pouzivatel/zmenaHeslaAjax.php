@@ -1,5 +1,5 @@
 <?php
-require_once "pripojenie.php";
+require_once "../pripojenie.php";
 $stare = $_POST["stare"];
 $nove = $_POST["nove"];
 $noveKontrola = $_POST["noveKontrola"];
@@ -11,7 +11,9 @@ if (password_verify($stare, $riadok["heslo"])) {
         $updateHeslo = "update pouzivatel set heslo='" . $hashNoveHeslo . "' where ID ='" . $_SESSION["id"] . "'";
         mysqli_query($mysqli, $updateHeslo);
         echo "<h2>Heslo bolo zmenené!</h2>";
+    } else {
+        echo "<h2>Heslá sa nezhodujú!</h2>";
     }
 } else {
-    echo "<h2>Chyba!</h2>";
+    echo "<h2>Zadali ste nesprávne aktuálne heslo!</h2>";
 }

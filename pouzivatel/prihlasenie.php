@@ -1,17 +1,15 @@
-<?php
-require_once "pouzivatelFunkcie.php"
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlásenie</title>
-    <link href="styly.css" rel="stylesheet">
+    <link href="../styly.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
 <div class="divHlavicka">
-    <img class="nadpis" src="obrazky/nadpis.JPG">
+    <img class="nadpis" src="../obrazky/nadpis.JPG">
 </div>
 <div class="formular">
     <h2>Je potrebné prihlásenie, zadajte svoje meno a heslo.</h2>
@@ -22,11 +20,24 @@ require_once "pouzivatelFunkcie.php"
     </form>
     Ešte nemáte vytvorený účet? <a href="registracia.php"><b>Zaregistrujte sa!</b></a>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#prihlas').click(function (e) {
+            e.preventDefault();
+            var meno = $('#meno').val();
+            var heslo = $('#heslo').val();
+            $.ajax
+            ({
+                type: "POST",
+                url: "prihlasenieAjax.php",
+                data: {"meno": meno, "heslo": heslo},
+                success: function (data) {
+                    $("<div>" + data + "</div>").appendTo("body");
+                    $('#login')[0].reset();
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
-
-<?php
-if (isset($_POST["prihlas"])) {
-    prihlas(mysqli_real_escape_string($mysqli, $_POST["meno"]), mysqli_real_escape_string($mysqli, $_POST["heslo"]), $mysqli);
-}
-?>
