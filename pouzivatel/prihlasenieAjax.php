@@ -16,8 +16,7 @@ if ($meno != "" && $heslo != "") {
             $_SESSION["meno"] = $meno;
             $_SESSION["id"] = $riadok1["ID"];
             $_SESSION["admin"] = $riadok1["admin"];
-            //echo "<h2>Podarilo sa!</h2>";
-            header("Location: ../produkty/produkty.php");
+            echo "";
         } else {
             echo "<h2>Zadali ste nesprávne heslo!</h2>";
         }

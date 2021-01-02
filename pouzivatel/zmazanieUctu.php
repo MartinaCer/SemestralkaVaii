@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zmazanie účtu</title>
     <link href="../styly.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 </head>
 <body>
 <div class="divHlavicka">
@@ -13,23 +14,36 @@
     ?>
     <p>To je škoda :(. Ak skutočne chcete zmazať svoj účet, potvrďte voľbu dole.</p>
 </div>
-<form class="formular" method="post">
-    <input name="heslo" placeholder="Heslo" type="password" required><br><br>
-    <input class="button" name="zmaz" type="submit" value="Zmaž účet">
+<form class="formular" method="post" id="zmazUcet">
+    <input name="heslo" id="heslo" placeholder="Heslo" type="password" required><br><br>
+    <input class="button" name="zmaz" id="zmaz" type="submit" value="Zmaž účet">
 </form>
+<script>
+    $(document).ready(function () {
+        $('#zmaz').click(function (e) {
+            if ($('#zmazUcet')[0].checkValidity()) {
+                e.preventDefault();
+                var hlaska = document.getElementById("hlaska");
+                if (hlaska != null) {
+                    hlaska.remove();
+                }
+                var heslo = $('#heslo').val();
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "zmazanieUctuAjax.php",
+                    data: {"heslo": heslo},
+                    success: function (data) {
+                        if (data == "") {
+                            window.location = "odhlasenie.php";
+                        } else {
+                            $("<div id='hlaska'>" + data + "</div>").appendTo("body");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
-<?php if (isset($_POST["zmaz"])) {
-    $selectPouzivatel = "select * from pouzivatel where ID ='" . $_SESSION["id"] . "'";
-    $riadok = mysqli_fetch_assoc(mysqli_query($mysqli, $selectPouzivatel));
-    if (password_verify($_POST["heslo"], $riadok["heslo"])) {
-        $id = $_SESSION["id"];
-        $deleteHistoria = "delete from historia where IDpouzivatel='" . $id . "'";
-        mysqli_query($mysqli, $deleteHistoria);
-        $deletePouzivatel = "delete from pouzivatel where ID='" . $id . "'";
-        mysqli_query($mysqli, $deletePouzivatel);
-        header("Location: odhlasenie.php");
-    } else {
-        echo "<h2>Zadali ste nesprávne heslo!</h2>";
-    }
-}

@@ -1,3 +1,9 @@
+<?php
+require_once "../pripojenie.php";
+if (isset($_SESSION["id"])) {
+    header("Location: ../produkty/produkty.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,19 +29,28 @@
 <script>
     $(document).ready(function () {
         $('#prihlas').click(function (e) {
-            e.preventDefault();
-            var meno = $('#meno').val();
-            var heslo = $('#heslo').val();
-            $.ajax
-            ({
-                type: "POST",
-                url: "prihlasenieAjax.php",
-                data: {"meno": meno, "heslo": heslo},
-                success: function (data) {
-                    $("<div>" + data + "</div>").appendTo("body");
-                    $('#login')[0].reset();
+            if ($('#login')[0].checkValidity()) {
+                e.preventDefault();
+                var chyba = document.getElementById("hlaska");
+                if (chyba != null) {
+                    chyba.remove();
                 }
-            });
+                var meno = $('#meno').val();
+                var heslo = $('#heslo').val();
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "prihlasenieAjax.php",
+                    data: {"meno": meno, "heslo": heslo},
+                    success: function (data) {
+                        if (data == "") {
+                            window.location = "../produkty/produkty.php";
+                        } else {
+                            $("<div id='hlaska'>" + data + "</div>").appendTo("body");
+                        }
+                    }
+                });
+            }
         });
     });
 </script>

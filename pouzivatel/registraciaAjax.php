@@ -15,7 +15,7 @@ if ($meno != "" && $heslo != "") {
         if ($pocet == 0) {
             $insert = "insert into pouzivatel(meno, heslo, mail, telefon) values ('$meno', '$hashHeslo', '$mail', '$cislo')";
             mysqli_query($mysqli, $insert);
-            header("Location: prihlasenie.php");
+            echo "";
         } else
             echo "<h2>Toto meno sa už používa!</h2>";
     } else
