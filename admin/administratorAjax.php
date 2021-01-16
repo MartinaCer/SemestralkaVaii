@@ -23,8 +23,11 @@ switch ($operacia) {
         $select = "select * from produkt";
         $vysledok = mysqli_query($mysqli, $select);
         while ($riadok = mysqli_fetch_assoc($vysledok)) {
+            $updateProdukt = "<button class='button' onclick='upravProdukt()'>Uprav</button>";
+            $vymazProdukt = "<button class='button' onclick='vymazProdukt()'>Vymaž</button>";
             $jsonPole[] = array("meno" => $riadok["meno"], "obrazok" => $riadok["obrazok"],
-                "cena" => $riadok["cena"] . " €", "pocet" => $riadok["pocetPredanych"]);
+                "cena" => $riadok["cena"] . " €", "pocet" => $riadok["pocetPredanych"],
+                "akcia" => $updateProdukt." ".$vymazProdukt, "id"=> $riadok["ID"]);
         }
         break;
 }

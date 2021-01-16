@@ -30,7 +30,7 @@
     <div class="modalText">
         <span class="modalZavri">&times;</span>
         <h1>Pridaj nový produkt: </h1>
-        <form style="align-content: center" method="post">
+        <form method="post">
             <label for="nazov">Názov produktu</label><br>
             <input type="text" placeholder="Názov" name="nazov" id="nazov" required><br><br>
             <label for="nazov">Súbor s obrázkom produktu (nemusí byť zadaný)</label><br>
@@ -41,18 +41,43 @@
         </form>
     </div>
 </div>
+<div id="vymazProduktModal" class="divModal">
+    <div class="modalText">
+        <span class="modalZavri">&times;</span>
+        <h1>Chcete naozaj vymazať tento produkt?</h1>
+        <form id="vymazFormModal" method="post">
+            <input type="submit" value="Áno, chcem vymazať produkt!" name="anoVymaz" id="anoVymaz" class="button">
+        </form>
+
+    </div>
+</div>
+<div id="upravProduktModal" class="divModal">
+    <div class="modalText">
+        <span class="modalZavri">&times;</span>
+        <h1>Zadajte nové informácie o produkte:</h1>
+        <form id="upravFormModal" method="post"></form>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
-        const modal = document.getElementById("pridajProduktModal");
+        const pridajProduktModal = document.getElementById("pridajProduktModal");
+        const vymazProduktModal = document.getElementById("vymazProduktModal");
+        const upravProduktModal = document.getElementById("upravProduktModal");
         document.getElementById("pridajProdukt").onclick = function () {
-            modal.style.display = "block";
+            pridajProduktModal.style.display = "block";
         }
         document.getElementsByClassName("modalZavri")[0].onclick = function () {
-            modal.style.display = "none";
+            pridajProduktModal.style.display = "none";
         }
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == pridajProduktModal) {
+                pridajProduktModal.style.display = "none";
+            }
+            if (event.target == vymazProduktModal) {
+                vymazProduktModal.style.display = "none";
+            }
+            if (event.target == upravProduktModal) {
+                upravProduktModal.style.display = "none";
             }
         }
         document.getElementById("tabulka").style.visibility = "hidden";
@@ -135,11 +160,12 @@
                 success: function (data) {
                     var len = data.length;
                     for (var i = 0; i < len; i++) {
-                        var riadok = "<tr>" +
+                        var riadok = "<tr id=" + data[i].id + ">" +
                             "<td>" + data[i].meno + "</td>" +
                             "<td>" + data[i].obrazok + "</td>" +
                             "<td>" + data[i].cena + "</td>" +
                             "<td>" + data[i].pocet + "</td>" +
+                            "<td>" + data[i].akcia + "</td>" +
                             "</tr>";
                         $("#tabulka tbody").append(riadok);
                     }
@@ -151,10 +177,32 @@
                 "<th> Súbor s obrázkom </th>" +
                 "<th> Cena produktu </th>" +
                 "<th> Počet predaných kusov </th>" +
+                "<th></th>" +
                 "</tr>";
             $("#tabulka thead").append(hlavicka);
         });
     });
+    function vymazProdukt() {
+        idProduktu = event.target.parentNode.parentNode.id;
+        hiddenPole = "<input type='hidden' name='idProduktuVymaz' value=" + idProduktu + "/>";
+        $('#vymazFormModal').append(hiddenPole);
+        document.getElementById("vymazProduktModal").style.display = "block";
+    }
+    function upravProdukt() {
+        document.getElementById("upravFormModal").innerHTML = "";
+        idProduktu = event.target.parentNode.parentNode.id;
+        nazovProduktu = "TestNazov";
+        hiddenPole = "<input type='hidden' name='idProduktuUprav' value=" + idProduktu + "/>";
+        labelNazov = "<label for='nazov'>Názov produktu</label><br>";
+        nazovPole = "<input type='text' name='nazov' id='nazov' value='" + nazovProduktu + "'required><br><br>";
+        labelObrazok = "<label for='obrazok'>Súbor s obrázkom produktu (nemusí byť zadaný)</label><br>";
+        obrazokPole = "<input type='text' name='obrazok' id='obrazok' value=" + nazovProduktu + "><br><br>";
+        labelCena = "<label for='cena'>Cena produktu</label><br>";
+        cenaPole = "<input type='number' name='cena' min='1' id='cena' value='" + idProduktu + "'required><br><br>";
+        submitTlacidlo = "<input type='submit' value='Áno, chcem upraviť produkt!' name='anoUprav' id='anoUprav' class='button'>";
+        $('#upravFormModal').append(hiddenPole, labelNazov, nazovPole, labelObrazok, obrazokPole, labelCena, cenaPole, submitTlacidlo);
+        document.getElementById("upravProduktModal").style.display = "block";
+    }
 </script>
 </body>
 </html>
@@ -165,4 +213,17 @@ if (isset($_POST["pridaj"])) {
     $cena = $_POST["cena"];
     $insert = "insert into produkt(meno, obrazok, cena) values('$nazov', '$obrazok', '$cena')";
     mysqli_query($mysqli, $insert);
+}
+if (isset($_POST["anoVymaz"])) {
+    $id = $_POST["idProduktuVymaz"];
+    $delete = "delete from produkt where ID='" . $id . "'";
+    mysqli_query($mysqli, $delete);
+}
+if (isset($_POST["anoUprav"])) {
+    $id = $_POST["idProduktuUprav"];
+    $nazov = $_POST["nazov"];
+    $obrazok = $_POST["obrazok"];
+    $cena = $_POST["cena"];
+    $update = "update produkt set meno='" . $nazov . "', obrazok='" . $obrazok . "', cena='" . $cena . "' where ID ='" . $id . "'";
+    mysqli_query($mysqli, $update);
 }
