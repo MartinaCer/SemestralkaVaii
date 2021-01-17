@@ -1,7 +1,7 @@
 <?php
 require_once "pripojenie.php";
 if (!isset($_SESSION["meno"])) {
-    header("Location: prihlasenie.php");
+    header("Location: ../pouzivatel/prihlasenie.php");
 }
 ?>
 <div id="navigacia" class="menu">

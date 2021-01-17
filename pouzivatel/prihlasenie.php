@@ -12,6 +12,7 @@ if (isset($_SESSION["id"])) {
     <title>Prihlásenie</title>
     <link href="../styly.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="prihlasenieScript.js"></script>
 </head>
 <body>
 <div class="divHlavicka">
@@ -26,33 +27,5 @@ if (isset($_SESSION["id"])) {
     </form>
     Ešte nemáte vytvorený účet? <a href="registracia.php"><b>Zaregistrujte sa!</b></a>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#prihlas').click(function (e) {
-            if ($('#login')[0].checkValidity()) {
-                e.preventDefault();
-                var chyba = document.getElementById("hlaska");
-                if (chyba != null) {
-                    chyba.remove();
-                }
-                var meno = $('#meno').val();
-                var heslo = $('#heslo').val();
-                $.ajax
-                ({
-                    type: "POST",
-                    url: "prihlasenieAjax.php",
-                    data: {"meno": meno, "heslo": heslo},
-                    success: function (data) {
-                        if (data == "") {
-                            window.location = "../produkty/produkty.php";
-                        } else {
-                            $("<div id='hlaska'>" + data + "</div>").appendTo("body");
-                        }
-                    }
-                });
-            }
-        });
-    });
-</script>
 </body>
 </html>

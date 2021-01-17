@@ -27,7 +27,7 @@ switch ($operacia) {
             $vymazProdukt = "<button class='button' onclick='vymazProdukt()'>Vymaž</button>";
             $jsonPole[] = array("meno" => $riadok["meno"], "obrazok" => $riadok["obrazok"],
                 "cena" => $riadok["cena"] . " €", "pocet" => $riadok["pocetPredanych"],
-                "akcia" => $updateProdukt." ".$vymazProdukt, "id"=> $riadok["ID"]);
+                "akcia" => $updateProdukt . " " . $vymazProdukt, "id" => $riadok["ID"]);
         }
         break;
 }

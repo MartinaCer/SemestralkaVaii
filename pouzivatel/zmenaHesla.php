@@ -6,6 +6,7 @@
     <title>Zmena hesla</title>
     <link href="../styly.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="zmenaHeslaScript.js"></script>
 </head>
 <body>
 <div class="divHlavicka">
@@ -20,30 +21,5 @@
     <input id="noveKontrola" name="noveKontrola" placeholder="Kontrola hesla" type="password" required><br><br>
     <input class="button" id="zmenHeslo" name="zmenHeslo" type="submit" value="Zmeň heslo!">
 </form>
-<script>
-    $(document).ready(function () {
-        $('#zmenaHesla').click(function (e) {
-            if ($('#login')[0].checkValidity()) {
-                e.preventDefault();
-                var hlaska = document.getElementById("hlaska");
-                if (hlaska != null) {
-                    hlaska.remove();
-                }
-                var stare = $('#stare').val();
-                var nove = $('#nove').val();
-                var noveKontrola = $('#noveKontrola').val();
-                $.ajax
-                ({
-                    type: "POST",
-                    url: "zmenaHeslaAjax.php",
-                    data: {"stare": stare, "nove": nove, "noveKontrola": noveKontrola},
-                    success: function (data) {
-                        $("<div id='hlaska'>" + data + "</div>").appendTo("body");
-                    }
-                });
-            }
-        });
-    });
-</script>
 </body>
 </html>
