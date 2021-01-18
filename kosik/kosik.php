@@ -35,7 +35,7 @@
                 <td>
                     <?php echo $riadok["meno"]; ?>
                 </td>
-                <td><?php echo $riadok["cena"] . " €"; ?> </td>
+                <td><?php echo $riadok["cena"] . " €"; ?></td>
                 <td>
                     <form method="post">
                         <input type="number" class="cislo" value="<?php echo $_SESSION["kosik"][$kluc] ?>" min="1"
@@ -48,7 +48,7 @@
                     $celkovoprodukt = $riadok["cena"] * $_SESSION["kosik"][$kluc];
                     $celkovo += $celkovoprodukt;
                     echo $celkovoprodukt . " €";
-                    ?> </td>
+                    ?></td>
             </tr>
             <?php
             next($_SESSION["kosik"]);

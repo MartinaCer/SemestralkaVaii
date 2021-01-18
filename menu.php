@@ -14,8 +14,8 @@ if (!isset($_SESSION["meno"])) {
     <a id="admin" href="../admin/administrator.php">Administrátor</a>
 </div>
 <span class="menuIkona" onclick="zobrazMenu()">&#9776; MENU</span>
-<img class="nadpis" src="../obrazky/nadpis.JPG"><br>
-<a href="../pouzivatel/odhlasenie.php"><img class="menuOdhlas" src="../obrazky/odhlasenie.png"></a>
+<img class="nadpis" src="../obrazky/nadpis.JPG" alt="nadpis"><br>
+<a href="../pouzivatel/odhlasenie.php"><img class="menuOdhlas" src="../obrazky/odhlasenie.png" alt="odhlasenie"></a>
 <script>
     window.onload = function () {
         var admin = <?php echo $_SESSION["admin"];?>;

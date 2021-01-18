@@ -16,7 +16,7 @@ if (isset($_SESSION["id"])) {
 </head>
 <body>
 <div class="divHlavicka">
-    <img class="nadpis" src="../obrazky/nadpis.JPG">
+    <img class="nadpis" src="../obrazky/nadpis.JPG" alt="nadpis">
 </div>
 <div class="formular">
     <h2>Je potrebné prihlásenie, zadajte svoje meno a heslo.</h2>
